@@ -1,29 +1,35 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas_20233/models/models.dart';
 
 class CardSwiper extends StatelessWidget {
-  const CardSwiper({super.key});
+  final List<Movie> movies;
+  const CardSwiper({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
     final size =
         MediaQuery.of(context).size; //tamanionde  pantalla de dispositio
-    return Container(
+    return SizedBox(
       width: double.infinity, //este agarra el ancho de la pantalla
       height: size.height * 0.5,
       child: Swiper(
-        itemCount: 10,
+        itemCount: movies.length,
         layout: SwiperLayout.STACK, //foma en que se comporta el swiper al pasar
         itemWidth: size.width * 0.6,
         itemHeight: size.height * 0.4, //40 porciento del tamanio
         itemBuilder: (_, int index) {
+          final movie = movies[index];
+          print(movie.posterPath);
+          print(movie.fullPosterImg);
           return GestureDetector(
-            onTap: () => Navigator.pushNamed(context, 'details', arguments: ''),
+            onTap: () =>
+                Navigator.pushNamed(context, 'details', arguments: movie),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(20),
-              child: const FadeInImage(
+              child: FadeInImage(
                 placeholder: AssetImage('assets/no-image.jpg'),
-                image: AssetImage('assets/no-image.jpg'),
+                image: NetworkImage(movie.fullPosterImg),
               ),
             ),
           ); //saber que se hace con el tactil con el dedo
