@@ -19,7 +19,13 @@ class DetailsScreen extends StatelessWidget {
           ),
           SliverList(
             delegate: SliverChildListDelegate.fixed(
-              [_PosterAndTitle(movie: movie), _Overview(), ActorSlider()],
+              [
+                _PosterAndTitle(movie: movie),
+                _Overview(
+                  movies: movie,
+                ),
+                ActorSlider()
+              ],
             ),
           ),
         ],
@@ -126,14 +132,15 @@ class _PosterAndTitle extends StatelessWidget {
 }
 
 class _Overview extends StatelessWidget {
-  const _Overview({super.key});
+  final Movie movies;
+  const _Overview({super.key, required this.movies});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-      child: const Text(
-        'arremangala y rrempujala,arremangala y rrempujala,arremangala y rrempujala,arremangala y rrempujala,arremangala y rrempujala,arremangala y rrempujala,',
+      child: Text(
+        movies.overview,
         textAlign: TextAlign.justify,
         style: TextStyle(fontSize: 15),
       ), //ESTO ES UN CONSTRUCTOR CON NOMBRE buscar lorem
